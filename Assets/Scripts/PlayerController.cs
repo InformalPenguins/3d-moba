@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour {
         line = GetComponent<LineRenderer>();
         path = new NavMeshPath();
 
-//        agent.updateRotation = false;
 
         if(isAI){
 //            moveToLocation( new Vector3(125.2f, 0.0f, 123.9f));
@@ -54,9 +53,13 @@ public class PlayerController : MonoBehaviour {
             checkMouseClicked();
         }
     }
-        void FixedUpdate(){
-            checkNavMesh();
-        }
+    public void FixedUpdate(){
+        checkNavMesh();
+        preventRotation();
+    }
+    private void preventRotation(){
+        transform.rotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+    }
     //    void LateUpdate(){
     ////        checkNavMesh();
     //    }
@@ -68,7 +71,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         if(agent.hasPath && agent.remainingDistance > 0f){
-            print("agent.remainingDistance: " + agent.remainingDistance);
+            //print("agent.remainingDistance: " + agent.remainingDistance);
         } else {
             stopMoving();
 //            DrawPath(agent.path);
@@ -116,6 +119,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool("moving", true);
 
         agent.destination = location;
+        agent.updateRotation = false;
     }
 
     private void stopMoving(){

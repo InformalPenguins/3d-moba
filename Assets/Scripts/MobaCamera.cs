@@ -24,6 +24,7 @@ public class MobaCamera : MonoBehaviour {
     [Space(1), Header("Screen Movement Settings")]
     public float MovementFactor = 0.7f;
     public float MaxMovementSpeed = 40f;
+    public bool IsCameraLocked = false;
     
     [Space(1), Header("DEV MODE (Not working)")]
     private float MapBorderX1 = 100f, MapBorderZ1 = 100f,
@@ -62,11 +63,12 @@ public class MobaCamera : MonoBehaviour {
 
     void LateUpdate()
     {
-        Vector3 translation = Vector3.zero;
-        if(Input.GetKey(CAMERA_LOCK)){
+        if(IsCameraLocked || Input.GetKey(CAMERA_LOCK)){
             //You can only lock the camera or move, otherwise it jumps while doing both.
             lockCamera ();
         } else {
+            Vector3 translation = Vector3.zero;
+
             translation = checkMousePosition(translation, Input.mousePosition.x, Input.mousePosition.y);
             
             Vector3 newTranslation = camera.transform.position + translation;
