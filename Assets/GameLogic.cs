@@ -204,5 +204,8 @@ public class GameLogic : MonoBehaviour {
 
         */
     }
+    public void EndGame(bool color){
+        //LevelManager.Instance.GameOver(IsWon());
+    }
 
 }

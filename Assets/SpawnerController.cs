@@ -5,38 +5,55 @@ using UnityEngine;
 public class SpawnerController : MonoBehaviour {
     public GameObject creep;
     public GameObject target;
-    private float waveDelay = 3f, lastWave = 1;
+    private float waveDelay = 9f, lastWave = 1f;
+    private float inBetweenDelay = 1f, lastMinion = 0;
     public Transform spawner;
     private Vector3 spawnLocation;
     private Quaternion spawnRotation;
+    public bool color = false;
+    public Material customMaterial;
+    private int spawnAmount = 0;
+    public int hp = 3;
+
     void Awake(){
         spawnLocation = spawner.transform.position;
         spawnRotation = spawner.transform.localRotation;
     }
-    void FixedUpdate () {
+    void Update () {
         lastWave -= Time.deltaTime;
         if(lastWave <= 0){
             lastWave = waveDelay;
             spawnWave ();
         }
+
+        if (spawnAmount > 0) {
+            lastMinion -= Time.deltaTime;
+            if(lastMinion <= 0){
+                lastMinion = inBetweenDelay;
+                spawnMinion ();
+            }
+        }
+        winCondition ();
     }
-    private void spawnDelayed(int amount){
-        int delay = 1;
-        for(int i = 0; i< amount; i++){
-            //One behind the other by delay seconds
-            StartCoroutine(spawnDelayedRoutine(amount * delay));
+    private void winCondition(){
+        if(hp < 0){
+            GameLogic.Instance ().EndGame (color);
         }
     }
-    private IEnumerator spawnDelayedRoutine(float delay){
-        yield return new WaitForSeconds(delay);
+
+    private void spawnWave(){
+        spawnAmount = 3;
+    }
+    private void spawnMinion(){
+        spawnAmount--;
         GameObject creep = getCreep ();
         CreepController creepController = creep.GetComponent<CreepController>();
         //move to enemy nexus
         creepController.setTarget (target);
-    }
-
-    private void spawnWave(){
-        spawnDelayed (2);
+        if (color) {
+            Renderer rend = creep.GetComponent<MeshRenderer>();
+            rend.material = customMaterial;
+        }
     }
 
 

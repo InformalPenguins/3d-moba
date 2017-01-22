@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4000010212481058}
   - component: {fileID: 33000013723726750}
   - component: {fileID: 23000012646362424}
+  - component: {fileID: 65058550394122630}
   m_Layer: 0
   m_Name: trundle-cone
-  m_TagString: Untagged
+  m_TagString: WEAPON
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,3 +80,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013337352018}
   m_Mesh: {fileID: 4300000, guid: 31690448103cd1a429d4b326e68ddb96, type: 3}
+--- !u!65 &65058550394122630
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013337352018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.02, y: 0.019999998, z: 0.019999998}
+  m_Center: {x: 0, y: 0, z: 0}

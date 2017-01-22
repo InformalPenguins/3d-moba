@@ -5,7 +5,6 @@ using UnityEngine;
 public class CreepController : MonoBehaviour {
     private UnityEngine.AI.NavMeshAgent agent;
     private GameObject target;
-
     // Use this for initialization
     void Awake () {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -37,5 +36,14 @@ public class CreepController : MonoBehaviour {
     }
     private void stopMoving(){
         agent.velocity = Vector3.zero;
+    }
+    void OnTriggerEnter(Collider other) {
+        Transform transform = other.transform;
+        if(transform.tag.Equals("BASE")){
+            SpawnerController controller = transform.GetComponent<SpawnerController> ();
+            controller.hp -= 1;
+        } else if(transform.tag.Equals("WEAPON") || transform.tag.Equals("MINION")){
+            Destroy (gameObject);
+        }
     }
 }

@@ -92,8 +92,10 @@ public class UDPSender : MonoBehaviour
     // init
     public void init()
     {
-        // TODO: define from scene 1
-        serverIP="127.0.0.1";
+        serverIP = PlayerPrefs.GetString("serverIp");
+        if (serverIP.Trim().Equals ("")) {
+            serverIP = "127.0.0.1";
+        }
         serverPort=8051;
 
         remoteEndPoint = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);

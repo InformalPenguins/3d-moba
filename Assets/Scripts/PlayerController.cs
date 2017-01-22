@@ -6,7 +6,8 @@ public class PlayerController : MonoBehaviour {
     private UnityEngine.AI.NavMeshAgent agent;
 
     public int id = 1;
-    public GameObject cone;
+    private GameObject cone;
+    public GameObject conePrefab;
     public GameObject swamp;
     public static int playerIdx = -1;
     public static PlayerController self;
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     public Transform arrows;
 
     public bool isAI = true;
-    private float MovementSpeed = 6f; //3.5f; //Usually 2 (kind of slow or map too big)
+    private float MovementSpeed = 6.5f; //3.5f; //Usually 2 (kind of slow or map too big)
     
     LineRenderer line;
     UDPSender udpSender;
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviour {
 
         GameLogic.playersPool [id] = gameObject;
         udpSender = GameLogic.Instance ().udpSender;
-
+        cone = GameObject.Instantiate (conePrefab, transform.position, conePrefab.transform.rotation);
     }
 
     void Update () {
@@ -52,17 +53,18 @@ public class PlayerController : MonoBehaviour {
         turnOffDelayed (0.8f, "isR");
         stopMoving (true);
     }
-    public void attackE(){
+    public void attackE(Vector3 position){
         anim.SetBool("isE", true);
         turnOffDelayed (0.4f, "isE");
-        Cone ();
+        Cone (position);
         stopMoving (true);
     }
-    private void Cone(){
+    private void Cone(Vector3 position){
         if(cone.activeInHierarchy){
             print("Cone already active.");
             return;
         }
+        cone.transform.position = position;
         cone.SetActive(true);
         StartCoroutine("FadeCone");
     }
@@ -190,7 +192,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool("isAttacking", true);
     }
     private IEnumerator FadeCone(){
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         cone.SetActive(false);
     }
     

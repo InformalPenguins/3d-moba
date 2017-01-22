@@ -2672,17 +2672,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe9a4758db94d64fa47a5d8ad3b5417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   cone: {fileID: 1000013337352018, guid: 55970327e202902418f52bc99e413308, type: 2}
+  conePrefab: {fileID: 1000013337352018, guid: 55970327e202902418f52bc99e413308, type: 2}
   swamp: {fileID: 1000010131094130, guid: 1bc51777321c89f479005ff8f2c5cdc9, type: 2}
-  Q: q
-  W: w
-  E: e
-  R: r
-  STOP: s
   arrows: {fileID: 0}
-  MoveClickButton: 1
   isAI: 1
-  MovementSpeed: 2
 --- !u!136 &136000012324676666
 CapsuleCollider:
   m_ObjectHideFlags: 1
