@@ -6,7 +6,8 @@ using System;
 public class GameLogic : MonoBehaviour {
     private static readonly Queue<Action> _executionQueue = new Queue<Action>();
     private static GameLogic _instance = null;
-    public UDPSend udpSender;
+    public UDPSender udpSender;
+    [NonSerialized]
     public InputManager inputManager;
 
     public static GameObject[] playersPool = new GameObject[2];

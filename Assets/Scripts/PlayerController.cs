@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
     private float MovementSpeed = 6f; //3.5f; //Usually 2 (kind of slow or map too big)
     
     LineRenderer line;
-    UDPSend udpSender;
+    UDPSender udpSender;
     //private UnityEngine.AI.NavMeshPath path;
     // Use this for initialization
     void Start () {
@@ -31,37 +31,10 @@ public class PlayerController : MonoBehaviour {
         GameLogic.playersPool [id] = gameObject;
         udpSender = GameLogic.Instance ().udpSender;
 
-        if(isAI){ //Assigned from server so you know who to update from your gui
-//            moveToLocation( new Vector3(125.2f, 0.0f, 123.9f));
-        }
     }
 
     void Update () {
-//        if(!isAI){
-//            anim.SetBool("isQ", Input.GetKey(Q));
-//            anim.SetBool("isE", Input.GetKey(E));
-//            if(Input.GetKey(E)){
-//                Cone ();
-//            }
-//            if(Input.GetKey(W)){
-//                Swamp ();
-//            }
-//            anim.SetBool("isW", Input.GetKey(W));
-//            anim.SetBool("isR", Input.GetKey(R));
-//            
-//            if(Input.GetKey(STOP)){
-//                this.stopActions();
-//            }
-//            checkMouseClicked();
-//        }
     }
-//    IEnumerator turnOff(float time, string animState)
-//    {
-//        yield return new WaitForSeconds(time);
-//
-//        // Code to execute after the delay
-//        anim.SetBool(animState, false);
-//    }
 
     public void attackQ(){
         anim.SetBool("isQ", true);
@@ -144,26 +117,6 @@ public class PlayerController : MonoBehaviour {
 //                Debug.DrawLine(this.path.corners[i], this.path.corners[i+1], Color.red, 1, true);  
         }
     }
-//    //float mouseWaiting = 0f;
-//    private float mouseDelay = 0.5f; //detect every 2 seconds.
-//    private void checkMouseClicked(){
-//        //        mouseWaiting -= Time.deltaTime;
-//        //if(mouseWaiting <= 0 && Input.GetMouseButton (MoveClickButton))
-//        if(Input.GetMouseButton (MoveClickButton))
-//        {
-////            mouseWaiting = mouseDelay;
-//            Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-//            RaycastHit hit;
-//            
-//            if(Physics.Raycast(ray, out hit, 100))
-//            {
-//                arrows.position = hit.point + (Vector3.up * 0.5f);
-//                arrows.GetComponent<Animator>().Play("idle", -1, 0f);
-//                arrows.gameObject.SetActive(true);
-//                moveToLocation (hit.point);
-//            }
-//        }
-//    }
     private void DrawPath(UnityEngine.AI.NavMeshPath path){
         //TODO: Fix, not working - always renders from 0 0 0 --- ):
         if(path.corners.Length < 2) //if the path has 1 or no corners, there is no need
@@ -180,7 +133,7 @@ public class PlayerController : MonoBehaviour {
             return;
         }
         this.moveToLocation (location);
-        string locationMessage = MobaConstants.INPUT_POSITION + location.x + " " + location.y + " " + location.z ;
+        string locationMessage = MobaConstants.INPUT_POSITION + PlayerController.playerIdx + " " + location.x + " " + location.y + " " + location.z ;
         udpSender.sendString (locationMessage);
     }
     public void moveToLocation(Vector3 location){

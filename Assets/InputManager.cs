@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour {
 
             if(Physics.Raycast(ray, out hit, 100))
             {
-                playerController.moveToLocation (hit.point);
+                playerController.localMoveToLocation (hit.point);
             }
         }
     }

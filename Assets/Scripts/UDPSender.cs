@@ -22,7 +22,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-public class UDPSend : MonoBehaviour
+public class UDPSender : MonoBehaviour
 {
     private static int localPort;
 
@@ -59,60 +59,50 @@ public class UDPSend : MonoBehaviour
     }
 
     // OnGUI
-    void OnGUI()
-    {
-        Rect rectObj=new Rect(40,380,200,400);
-        GUIStyle style = new GUIStyle();
-        style.alignment = TextAnchor.UpperLeft;
-        GUI.Box(rectObj,"# UDPSend-Data\n127.0.0.1 "+serverPort+" #\n"
-            + "shell> nc -lu 127.0.0.1  "+serverPort+" \n"
-            ,style);
-
-        // ------------------------
-        // send it
-        // ------------------------
-        strMessage=GUI.TextField(new Rect(40,420,140,20),strMessage);
-        if (GUI.Button(new Rect(190,420,40,20), "send"))
-        {
-            sendString(strMessage+"\n");
-        }      
-
-
-        rectObj = new Rect(40,10,200,400);
-
-        style = new GUIStyle();
-        style.alignment = TextAnchor.UpperLeft;
-        GUI.Box(rectObj,"# UDPReceive\n127.0.0.1 "+serverPort+" #\n"
-            + "shell> nc -u 127.0.0.1 : "+serverPort+" \n"
-            + "\nLast Packet: \n"+ lastReceivedUDPPacket
-            + "\n\nAll Messages: \n"+allReceivedUDPPackets
-            ,style);
-    }
+//    void OnGUI()
+//    {
+//        Rect rectObj=new Rect(40,380,200,400);
+//        GUIStyle style = new GUIStyle();
+//        style.alignment = TextAnchor.UpperLeft;
+//        GUI.Box(rectObj,"# UDPSend-Data\n127.0.0.1 "+serverPort+" #\n"
+//            + "shell> nc -lu 127.0.0.1  "+serverPort+" \n"
+//            ,style);
+//
+//        // ------------------------
+//        // send it
+//        // ------------------------
+//        strMessage=GUI.TextField(new Rect(40,420,140,20),strMessage);
+//        if (GUI.Button(new Rect(190,420,40,20), "send"))
+//        {
+//            sendString(strMessage+"\n");
+//        }      
+//
+//
+//        rectObj = new Rect(40,10,200,400);
+//
+//        style = new GUIStyle();
+//        style.alignment = TextAnchor.UpperLeft;
+//        GUI.Box(rectObj,"# UDPReceive\n127.0.0.1 "+serverPort+" #\n"
+//            + "shell> nc -u 127.0.0.1 : "+serverPort+" \n"
+//            + "\nLast Packet: \n"+ lastReceivedUDPPacket
+//            + "\n\nAll Messages: \n"+allReceivedUDPPackets
+//            ,style);
+//    }
     Thread receiveThread;
     // init
     public void init()
     {
-        // Endpunkt definieren, von dem die Nachrichten gesendet werden.
-        print("UDPSend.init()");
-
-        // define
+        // TODO: define from scene 1
         serverIP="127.0.0.1";
         serverPort=8051;
 
-        // ----------------------------
-        // Senden
-        // ----------------------------
         remoteEndPoint = new IPEndPoint(IPAddress.Parse(serverIP), serverPort);
         server = new UdpClient();
         server.EnableBroadcast = true;
 
-        // status
         print("Sending to "+serverIP+" : "+serverPort);
-        print("Testing: nc -lu "+serverIP+" : "+serverPort);
 
-
-        receiveThread = new Thread(
-            new ThreadStart(handleServer));
+        receiveThread = new Thread(new ThreadStart(handleServer));
         receiveThread.IsBackground = true;
         receiveThread.Start();
 
