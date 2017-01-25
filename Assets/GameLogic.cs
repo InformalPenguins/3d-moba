@@ -187,7 +187,7 @@ public class GameLogic : MonoBehaviour {
 
 
         //rot = float.Parse(words[2], System.Globalization.CultureInfo.InvariantCulture);
-        Debug.Log("Reading position: " + "x: " + x + " y: " + y + " z: " + z);
+        Debug.Log("Reading position: Type("+ typeIdx + ", ID: "+objId+") " + "x: " + x + " y: " + y + " z: " + z);
         updatePos = new Vector3(x, y, z);
         updatedObject.transform.position = updatePos;
 
