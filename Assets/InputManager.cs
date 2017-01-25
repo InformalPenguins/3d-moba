@@ -21,7 +21,6 @@ public class InputManager : MonoBehaviour {
         if(Input.GetKey(Q)){
             playerController.attackQ ();
         }
-        print (lastE);
         if(Input.GetKey(E) && lastE <= 0){
             lastE = eDelay;
             Vector3 mousePosition = getMousePosition (); //            mouseWaiting = mouseDelay;
