@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     private float MovementSpeed = 6.5f; //3.5f; //Usually 2 (kind of slow or map too big)
     
     LineRenderer line;
-    UDPSender udpSender;
+    UDPClient udpClient;
     //private UnityEngine.AI.NavMeshPath path;
     // Use this for initialization
     void Start () {
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
         //path = new UnityEngine.AI.NavMeshPath();
 
         GameLogic.playersPool [id] = gameObject;
-        udpSender = GameLogic.Instance ().udpSender;
+        udpClient = MainThreadProcessor.Instance ().GetComponent<UDPClient> ();
         cone = GameObject.Instantiate (conePrefab, transform.position, conePrefab.transform.rotation);
     }
 
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour {
             " " + transform.position.x + " " + transform.position.y + " " + transform.position.z + 
             " " + transform.rotation.x + " " + transform.rotation.y + " " + transform.rotation.z + " " + transform.rotation.w;
 
-        udpSender.sendString (positionString);
+        udpClient.sendString (positionString);
     }
 
     private void preventRotation(){
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour {
         }
         this.moveToLocation (location);
         string locationMessage = MobaConstants.INPUT_POSITION + PlayerController.playerIdx + " " + location.x + " " + location.y + " " + location.z ;
-        udpSender.sendString (locationMessage);
+        udpClient.sendString (locationMessage);
     }
     public void moveToLocation(Vector3 location){
 //        NavMesh.CalculatePath(transform.position, location, NavMesh.AllAreas, path);
